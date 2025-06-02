@@ -46,4 +46,11 @@ write-host "There are a total of $($args.count) arguments"
     - kubectl apply -f solid-ts-app-ing.yaml
 
 ### 배포 상태 보기
+```
 kubectl get cm,deploy,svc,ep,ing -lapp=solid-ts-app
+```
+
+### Log 보기
+```
+kubectl logs -f -lapp=solid-ts-app
+```
