@@ -1,0 +1,40 @@
+# 빌드 환경
+FROM node:22-alpine AS build
+WORKDIR /app
+
+# 종속성 설치
+COPY package.json yarn.lock ./
+# RUN --mount=type=cache,target=/usr/local/share/.cache/yarn \
+#     yarn install --frozen-lockfile
+RUN --mount=type=cache,target=/usr/local/share/.cache/yarn \
+    yarn install
+
+
+# .env 파일 복사 (빌드 전에 반드시 복사!)
+COPY .env.aws ./.env
+
+# 소스 코드 복사 및 빌드
+COPY . .
+RUN yarn build
+
+# 프로덕션 런타임
+FROM nginx:stable-alpine AS runtime
+
+# 빌드 결과물 복사
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# public 디렉토리 생성 및 파일이동동
+RUN mkdir -p /usr/share/nginx/html/public
+RUN mv /usr/share/nginx/html/*.png /usr/share/nginx/html/public
+# RUN mv /usr/share/nginx/html/*.svg /usr/share/nginx/html/public
+
+# Nginx 설정 복사
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx/nginx.conf /etc/nginx/conf.d
+# COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+
+# 포트노출
+EXPOSE 8080
+
+# Nginx 실행
+CMD ["nginx", "-g", "daemon off;"]

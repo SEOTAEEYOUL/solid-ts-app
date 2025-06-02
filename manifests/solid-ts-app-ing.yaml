@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  labels:
+    app: solid-ts-app
+  name: solid-ts-app
+  namespace: default
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: solid-ts-app.skcc.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: solid-ts-app
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix

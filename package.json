@@ -1,0 +1,26 @@
+{
+  "name": "vite-template-solid",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite --host 0.0.0.0 --port 8080 --debug",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "vite": "^6.0.0",
+    "vite-plugin-solid": "^2.11.6"
+  },
+  "dependencies": {
+    "@okta/okta-auth-js": "^7.12.1",
+    "@solidjs/router": "^0.15.3",
+    "flatpickr": "^4.6.13",
+    "solid-js": "^1.9.5",
+    "vite-template-solid": "file:",
+    "yarn": "^1.22.22"
+  }
+}

@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: solid-ts-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: solid-ts-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: solid-ts-app
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: role
+                operator: In
+                values:
+                - worker
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - solid-ts-app
+              topologyKey: failure-domain.beta.kubernetes.io/zone
+            weight: 100
+    spec:
+      containers:
+      - name: solid-ts-app
+        image: taeeyoul/solid-ts-app-nginx:v0.0.5  # Nginx 빌드 이미지 사용
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        envFrom:
+        - configMapRef:
+            name: solid-ts-app
