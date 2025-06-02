@@ -9,10 +9,20 @@ yarn start or yarn dev
 ## Docker Build
 
 ### Docker hub 에 Repository 를 만든다.
+- "solid-ts-app-nginx"
 
 ### docker-build-dockerhub.ps1 를 수행하여 Docker Build & Push 를 한다.
 
 #### 정보 수정
+- `docker-build-dockerhub.ps1` 에서 registry 명을 수정한다.
+```
+# 초기화
+$ImageName="solid-ts-app-nginx"
+$ScriptName="Dockerfile.nginx"
+$RegistryName="taeeyoul"   --> 이 부분을 수정
+Write-Host "$ScriptName"
+write-host "There are a total of $($args.count) arguments"
+```
 
 #### 수행
 - docker 빌드 후 docker Hub repository 에 등록(docker push)

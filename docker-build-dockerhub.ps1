@@ -5,7 +5,7 @@
 #     [string]$Tag
 # )
 
-# 초기화화
+# 초기화
 $ImageName="solid-ts-app-nginx"
 $ScriptName="Dockerfile.nginx"
 $RegistryName="taeeyoul"
