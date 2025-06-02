@@ -10,7 +10,7 @@ yarn start or yarn dev
 
 ### Docker hub 에 Repository 를 만든다.
 
-### docker-build-dockerhub.ps1
+### docker-build-dockerhub.ps1 를 수행하여 Docker Build & Push 를 한다.
 
 #### 정보 수정
 
